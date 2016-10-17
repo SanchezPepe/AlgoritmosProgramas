@@ -1,0 +1,48 @@
+package GUI;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+/*José de Jesús Sánchez Aguilar
+ * CU: 156190
+ * 
+ * Definición de la clase ControlAlumnoControlador.
+ */
+
+
+public class ControlAlumnoControlador extends ControlAlumnoVista {
+
+	public ControlAlumnoControlador(String titulo){
+		super(titulo);
+		aceptar.addActionListener(new Escuchador());
+	}
+	
+	private class Escuchador implements ActionListener {
+		
+		public void actionPerformed(ActionEvent ev){
+			
+			
+			String accion;
+			accion = (String) menuCB.getSelectedItem();
+			int pos, i = 0;
+			
+			
+			/*CICLO WHILE QUE COMPARA LA ACCION DEL COMBO BOX SELECCIONADA Y DEVUELVE UN INT CON LA ACCIÓN
+			 * ELEGIDA POR USUARIO*/
+			while(!accion.equals(acciones[i]))
+				i++;
+			
+			pos = i;
+			
+			/*SE REALIZA LA ACCIÓN SOLICITADA*/
+			Menu.acciones(pos);
+			
+			/*SE ACTUALIZA EL JTEXTFIELD QUE CONTIENE LA TIRA DE MATERIAS*/
+			res.setText(Menu.getCon().toString());
+		}
+	}
+	public static void main(String[] args) {
+		ControlAlumnoControlador cAv = new ControlAlumnoControlador("Control Escolar");
+		
+	}
+}

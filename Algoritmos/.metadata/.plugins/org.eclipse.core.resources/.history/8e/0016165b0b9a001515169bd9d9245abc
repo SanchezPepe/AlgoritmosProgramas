@@ -1,0 +1,154 @@
+package GUI;
+
+import general.ControlAlumno;
+import java.io.File;
+import java.util.Scanner;
+
+/*José de Jesús Sánchez Aguilar
+ * CU: 156190
+ * 
+ * Definición de la clase Menu.
+ */
+
+import javax.swing.*;
+
+	/*CLASE QUE CONTIENE LOS METODOS A REALIZAR DE ACUERDO A LA ACCIÓN SELECCIONADA POR EL USUARIO*/
+public class Menu {
+	static ControlAlumno con = new ControlAlumno();
+	static JDialog dialog = new JDialog();
+
+	public static ControlAlumno getCon() {
+		return con;
+	}
+	
+	/*MÉTODOS ESTÁTICOS QUE MUESTRAN UN MENSAJE Y RECIBEN UN STRING COMO PARÁMETRO PARA IMPRIMIR 
+	 * UN MENSAJE ADECUADO DEPENDIENDO DE LA SITUACIÓN */
+
+	/*MÉTODO QUE MUESTRA UN JDIALOG QUE INDICA UN ERROR Y QUE RECIBE UN STRING COMO MENSAJE DE ERROR"*/
+	public static void mensajeError(String mensaje){
+		JOptionPane.showMessageDialog(dialog, mensaje ,"Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	/*MÉTODO QUE MUESTRA UN JDIALOG CON LA INFORMACIÓN DE UNA MATERIA */
+	public static void imprimeInfo(String inf){
+		JOptionPane.showMessageDialog(dialog, inf);
+	}
+
+	/*MÉTODO QUE MUESTRA UN JDIALOG QUE INDICA UNA CONFIRMACION Y QUE RECIBE UN STRING COMO MENSAJE DE CONFIRMACIÓN*/
+	public static void mensajeConfirm(String mensaje){
+		JOptionPane.showMessageDialog(dialog, mensaje);
+	}
+	
+	/*MÉTODO QUE MUESTRA UN JDIALOG QUE INDICA UNA ADVERTENCIA Y QUE RECIBE UN STRING COMO MENSAJE DE ADVERTENCIA*/
+	public static void mensajeAdv(String mensaje){
+		JOptionPane.showMessageDialog(dialog, mensaje, " ", JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public static double preguntaMat(){
+		double clave = -1;
+		try{
+			String input = JOptionPane.showInputDialog(null, "Ingresa clave de la materia: ");
+			clave = Double.parseDouble(input);
+		} catch(Exception e) {
+			mensajeError("Ingrese valores válidos");
+		}
+	    return clave;
+	}
+	
+	public static int pregunta(String pregunta){
+		String input = JOptionPane.showInputDialog(null, pregunta);
+	    int clave = (int) Double.parseDouble(input);
+	    return clave;
+	}
+	
+	public static String preguntaText(String preg){
+		String input = JOptionPane.showInputDialog(null, preg);
+	    return input;
+	}
+	
+	public static double preguntaCal(){
+		double calif = -1;
+		try{
+			String input2 = JOptionPane.showInputDialog(null, "Ingresa calificación: ");
+			calif = Double.parseDouble(input2);
+		} catch (Exception e){
+			mensajeError("Ingrese valores válidos");
+		}	
+        return calif;
+	}
+	
+	/*MÉTODO QUE LEE EL ARCHIVO QUE CONTIENE LAS MATERIAS Y LAS DA DE ALTA*/
+	public static void cargaDatos(ControlAlumno control){
+			String nom;
+			try{
+				Scanner archivo = new Scanner(new File("Materias"));
+				while(archivo.hasNext()){
+					nom = archivo.nextLine();
+					control.altaMateria(nom);
+				}
+				archivo.close();
+			} catch (Exception e) {
+				System.out.print("\nNo se pudo leer el archivo");
+				System.exit(-1);
+			}
+	}
+	
+	public static void carga(){
+		cargaDatos(con);
+	}
+		
+	/*MÉTODO QUE MANDA LOS MENSAJES ADECUADOS PARA LA ENTRADA Y SALIDA DE 
+	 * INFORMACION DE ACUERDO A LAS OPCIONES ESCOGIDA POR EL USUARIO*/
+	public static void acciones(int sel){
+			String nom = null;
+			int par, clave;
+			switch(sel){
+				case 1: String mat = preguntaText("Ingresa nombre de la nueva materia: ");
+						if(con.altaMateria(mat))
+							mensajeConfirm("Alta exitosa");
+						else
+							mensajeAdv("Ya está registrada la materia");
+						break;
+				case 2:	clave = (int) preguntaMat();
+						if(!con.containsMat(clave))
+							mensajeError("La materia no existe.");
+						else{
+							double cal = preguntaCal();
+							if(con.altaCalifMat(clave, cal) && cal > 0)
+								mensajeConfirm("Se guardó correctamente.");
+							else
+								mensajeError("No se pudo guardar.");
+						}
+						break;
+				case 3: clave = (int) preguntaMat();
+						if(con.containsMat(clave)){
+							par = pregunta("Parcial a eliminar: ");
+							if(con.eliminaCal(clave, par))
+								mensajeConfirm("Se eliminó correctamente.");
+							else
+								mensajeError("No se eliminó.");
+						}
+						else
+							mensajeError("La materia no existe.");
+						break;
+				case 4: clave = (int) preguntaMat();
+						if(con.bajaMateria(clave))
+							mensajeConfirm("Baja exitosa");
+						else
+							mensajeError("La materia no existe");
+						break;
+				case 5: clave = (int) preguntaMat();
+						if(!con.containsMat(clave))
+							mensajeError("La materia no existe.");
+						else{
+							nom = con.infoMateria(clave);
+							imprimeInfo(nom);
+						}	
+						break;
+				case 6:	mensajeAdv("Promedio general: " + con.getPromGen());
+						break;
+				case 7: System.exit(-1);
+			} 
+	}
+		
+}

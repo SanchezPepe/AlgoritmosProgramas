@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 3 elements to &apos;ProyectoJAVA/src/general&apos;&#x0D;&#x0A;- Original project: &apos;Programas&apos;&#x0D;&#x0A;- Destination element: &apos;ProyectoJAVA/src/general&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     general.LID.java&#x0D;&#x0A;     general.LIO.java&#x0D;&#x0A;     general.MAG.java" description="Copy compilation units" destination="=ProyectoJAVA/src&lt;general" element1="/src&lt;general{LID.java" element2="/src&lt;general{LIO.java" element3="/src&lt;general{MAG.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1448819437019" units="3" version="1.0"/>
+</session>

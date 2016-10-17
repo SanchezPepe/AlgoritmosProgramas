@@ -1,0 +1,49 @@
+package general;
+
+import java.util.Scanner;
+
+/*ARREGLOS DE UNA DIMENSIÓN
+1. Los tres arreglos reales x, y y z, tienen almacenados m, n, y o valores,
+respectivamente. Elabore un programa que lea los datos de cada arreglo y calcule
+e imprima las sumatorias de todos sus elementos, para lo cual deberá contar con
+una función para sumar todos los elementos de un arreglo y una función para leer
+los datos de un arreglo. Considere que las dimensiones de los arreglos se leen en
+el programa principal con 1 <= m,n,o >= 50.
+*/
+public class NumerosReales{
+	
+	private int arre[];
+	private final int MAX = 20;
+	private int m = 0;
+	Scanner lee = new Scanner(System.in);
+	
+	public NumerosReales(){
+	}
+	
+	public NumerosReales(int arre){
+		this.arre = new int [MAX];
+	}
+	
+	public int[] getArre(){
+		return arre;
+	}
+
+	public void leeDatos(int n){
+		int i, num;
+			for(i = 0; i <= n; i++){
+			num = lee.nextInt();
+			arre[i] = num;
+			}
+	}	
+	
+	public int sumaArre(int arre[]){
+		int suma = 0;
+		for(int i = 0; i < MAX-1; i++)
+			suma = suma + this.arre[i];
+		
+		System.out.print("Suma de elementos de los arreglos: " + suma);
+		return suma;
+	}
+	
+}	
+	

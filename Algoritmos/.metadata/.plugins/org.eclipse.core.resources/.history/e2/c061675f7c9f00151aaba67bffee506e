@@ -1,0 +1,32 @@
+package Final;
+
+import java.util.Scanner;
+
+public class Ejecutable {
+
+	public static void main(String[] args) {
+		
+		Scanner lee = new Scanner(System.in);
+		int num = lee.nextInt();
+		int aux = num;
+		int d = 0;
+		while(aux > 0){
+			d++;
+			aux = aux/10;
+		}
+		aux = num;
+		int s = 0;
+		int x, z = 0;
+		for(x = 1; x <= d; x++)
+			z = aux % 10;
+		aux = aux/10;
+		s = (int) (s + Math.pow(z, d));
+		if(s==num)
+			System.out.print("SI");
+		else
+			System.out.print("NO");
+		
+
+	}
+
+}
